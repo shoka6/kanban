@@ -1,13 +1,13 @@
 import React from "react";
-import Task from "./Task";
+import ProcessCollection from "./ProcessCollection";
 
 function App() {
   return (
-    <div>
-      <header className="bottom-0 flex-1">
-        <p>かんばんaaa</p>
+    <div className="h-screen">
+      <header className="flex justify-center bg-emerald-300 p-6">
+        <p className="">かんばん君</p>
       </header>
-      <Task />
+      <ProcessCollection />
     </div>
   );
 }
