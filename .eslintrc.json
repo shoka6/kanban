@@ -54,12 +54,6 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
-    },
-    "options": {
-      "failOnError": false
-    },
-    "devServer": {
-      "overlay": false
     }
   }
 }

@@ -1,22 +1,43 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useDrop } from "react-aria";
 import TaskCard from "./TaskCard";
-import { selectTodoTask, created } from "./tasksSlice";
+import { selectTodoTask, created, statusUpdated } from "./tasksSlice";
 import { useAppSelector, AppDispatch } from "./store";
 
 const TodoProcess = () => {
+  const ref = useRef(null);
+  const { dropProps } = useDrop({
+    ref,
+    async onDrop(e) {
+      await Promise.all(
+        e.items.map(async (item) => {
+          if (item.kind === "text") {
+            const id = await item.getText("id");
+            AppDispatch(statusUpdated({ id, status: "TODO" }));
+          }
+        })
+      );
+    },
+  });
   const todoTasks = useAppSelector(selectTodoTask);
   return (
-    <div className="h-5/6 w-1/3 bg-stone-200 text-center">
+    <div
+      {...dropProps}
+      ref={ref}
+      className="h-5/6 w-1/3 bg-stone-200 text-center"
+    >
       <div>待機</div>
       <button
         type="button"
-        onClick={() => AppDispatch(created({ requirement: "aaaa" }))}
+        onClick={() => AppDispatch(created({ requirement: "新規タスク" }))}
       >
         新規
       </button>
-      {todoTasks.map((task) => (
-        <TaskCard key={task.id} id={task.id} requirement={task.requirement} />
-      ))}
+      <div className="h-5/6 overflow-scroll">
+        {todoTasks.map((task) => (
+          <TaskCard key={task.id} id={task.id} requirement={task.requirement} />
+        ))}
+      </div>
     </div>
   );
 };

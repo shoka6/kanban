@@ -20,7 +20,7 @@ const ProgressProcess = () => {
     },
   });
 
-  const todoTasks = useAppSelector(selectProgressTask);
+  const progressTasks = useAppSelector(selectProgressTask);
   return (
     <div
       {...dropProps}
@@ -28,7 +28,7 @@ const ProgressProcess = () => {
       className="h-5/6 w-1/3 bg-stone-200 text-center"
     >
       <div>処理中</div>
-      {todoTasks.map((task) => (
+      {progressTasks.map((task) => (
         <TaskCard key={task.id} id={task.id} requirement={task.requirement} />
       ))}
     </div>
