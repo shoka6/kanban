@@ -23,35 +23,44 @@ const tasksAdapter = createEntityAdapter<Task>({
 // const id = nanoid();
 const tasksInitialEntityState = tasksAdapter.getInitialState();
 
-const { addOne } = tasksAdapter;
+const { addOne, updateOne } = tasksAdapter;
 
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState: tasksInitialEntityState,
   reducers: {
     created: (state, action: PayloadAction<{ requirement: string }>) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      // eslint-disable-next-line no-param-reassign
       addOne(state, {
         id: nanoid(),
         status: "TODO",
         requirement: action.payload.requirement,
       });
     },
+    statusUpdated: (
+      state,
+      action: PayloadAction<Pick<Task, "status" | "id">>
+    ) => {
+      updateOne(state, {
+        id: action.payload.id,
+        changes: {
+          status: action.payload.status,
+        },
+      });
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { created } = tasksSlice.actions;
+export const { created, statusUpdated } = tasksSlice.actions;
 
 const { selectAll } = tasksAdapter.getSelectors(
   (state: RootState) => state.tasks
 );
 export const selectTodoTask = createSelector(selectAll, (tasks) =>
   tasks.filter((task) => task.status === "TODO")
+);
+export const selectProgressTask = createSelector(selectAll, (tasks) =>
+  tasks.filter((task) => task.status === "PROGRESS")
 );
 
 export default tasksSlice.reducer;

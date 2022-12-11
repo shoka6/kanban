@@ -5,7 +5,6 @@ import { useAppSelector, AppDispatch } from "./store";
 
 const TodoProcess = () => {
   const todoTasks = useAppSelector(selectTodoTask);
-  console.log(todoTasks);
   return (
     <div className="h-5/6 w-1/3 bg-stone-200 text-center">
       <div>待機</div>
@@ -16,7 +15,7 @@ const TodoProcess = () => {
         新規
       </button>
       {todoTasks.map((task) => (
-        <TaskCard key={task.id} requirement={task.requirement} />
+        <TaskCard key={task.id} id={task.id} requirement={task.requirement} />
       ))}
     </div>
   );

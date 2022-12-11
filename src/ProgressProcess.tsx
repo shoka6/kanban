@@ -1,35 +1,26 @@
-import React, { useState, useRef } from "react";
-import { useDrop, DropItem } from "react-aria";
+import React, { useRef } from "react";
+import { useDrop } from "react-aria";
+import { statusUpdated, selectProgressTask } from "./tasksSlice";
+import { AppDispatch, useAppSelector } from "./store";
+import TaskCard from "./TaskCard";
 
 const ProgressProcess = () => {
-  const [dropped, setDropped] = useState<DropItem[]>([]);
   const ref = useRef(null);
   const { dropProps } = useDrop({
     ref,
     async onDrop(e) {
-      const items: DropItem[] = await Promise.all(
-        e.items
-          .filter(
-            (item) =>
-              item.kind === "text" &&
-              (item.types.has("text/plain") ||
-                item.types.has("my-app-custom-type"))
-          )
-          .map(async (item) => {
-            if (item.kind === "text" && item.types.has("my-app-custom-type")) {
-              return JSON.parse(await item.getText("my-app-custom-type"));
-            }
-            return { message: "aaa" };
-          })
+      await Promise.all(
+        e.items.map(async (item) => {
+          if (item.kind === "text") {
+            const id = await item.getText("id");
+            AppDispatch(statusUpdated({ id, status: "PROGRESS" }));
+          }
+        })
       );
-      setDropped(items);
     },
   });
-  if (dropped.length) {
-    console.log(dropped);
-    setDropped([]);
-  }
 
+  const todoTasks = useAppSelector(selectProgressTask);
   return (
     <div
       {...dropProps}
@@ -37,6 +28,9 @@ const ProgressProcess = () => {
       className="h-5/6 w-1/3 bg-stone-200 text-center"
     >
       <div>処理中</div>
+      {todoTasks.map((task) => (
+        <TaskCard key={task.id} id={task.id} requirement={task.requirement} />
+      ))}
     </div>
   );
 };
