@@ -42,7 +42,8 @@
         ],
         "unnamedComponents": ["function-expression", "arrow-function"]
       }
-    ]
+    ],
+    "react/jsx-props-no-spreading": ["off"]
   },
   "settings": {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
@@ -53,6 +54,9 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
+    },
+    "options": {
+      "failOnError": false
     }
   }
 }
