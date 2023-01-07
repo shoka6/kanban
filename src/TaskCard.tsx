@@ -1,18 +1,17 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { useDrag } from "react-aria";
-import { Task, requirementUpdated, taskRemoved } from "./tasksSlice";
-import { AppDispatch } from "./store";
+import {
+  Task,
+  requirementUpdated,
+  deadlineUpdated,
+  taskRemoved,
+  selectTaskDeadline,
+} from "./tasksSlice";
+import { AppDispatch, useAppSelector } from "./store";
 
 const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
-  const [state, setState] = useState(requirement);
-  const todayValue = useCallback(() => {
-    const today = new Date();
-    today.setDate(today.getDate());
-    const yyyy = today.getFullYear();
-    const mm = `0${today.getMonth() + 1}`.slice(-2);
-    const dd = `0${today.getDate()}`.slice(-2);
-    return `${yyyy}-${mm}-${dd}`;
-  }, []);
+  const [requirementState, setRequirementState] = useState(requirement);
+  const deadline = useAppSelector((state) => selectTaskDeadline(state, id));
 
   const { dragProps } = useDrag({
     getItems() {
@@ -40,17 +39,25 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
         X
       </button>
       <input
-        value={state}
-        onChange={(event) => setState(event.target.value)}
+        value={requirementState}
+        onChange={(event) => setRequirementState(event.target.value)}
         onBlur={() => {
-          AppDispatch(requirementUpdated({ id, requirement: state }));
+          AppDispatch(
+            requirementUpdated({ id, requirement: requirementState })
+          );
         }}
         className="bg-inherit"
       />
       <div className="flex flex-row-reverse">
         <input
           type="date"
-          value={todayValue()}
+          value={deadline}
+          onChange={(event) => {
+            if (deadline)
+              AppDispatch(
+                deadlineUpdated({ id, deadline: event.target.value })
+              );
+          }}
           className="bg-inherit text-right"
         />
         <div>あとN日</div>
