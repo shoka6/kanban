@@ -8,6 +8,7 @@ import {
   selectTaskDeadline,
 } from "./tasksSlice";
 import { AppDispatch, useAppSelector } from "./store";
+import { calculateRemainingDate } from "./util";
 
 const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
   const [requirementState, setRequirementState] = useState(requirement);
@@ -60,7 +61,7 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
           }}
           className="bg-inherit text-right"
         />
-        <div>あとN日</div>
+        <div>{`あと${calculateRemainingDate(deadline)}日`}</div>
       </div>
     </div>
   );

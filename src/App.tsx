@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="h-screen">
       <header className="flex justify-around space-x-20 bg-emerald-300 p-6">
+        {/* このやり方は変える */}
         <div className="" />
         <p className="">かんばん君</p>
         <NewTask />
