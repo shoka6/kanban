@@ -5,10 +5,8 @@ import NewTask from "./NewTask";
 function App() {
   return (
     <div className="h-screen">
-      <header className="flex justify-around space-x-20 bg-emerald-300 p-6">
-        {/* このやり方は変える */}
-        <div className="" />
-        <p className="">かんばん君</p>
+      <header className="grid grid-cols-9 items-center bg-emerald-300 p-5">
+        <p className="col-start-5 text-center">かんばん君</p>
         <NewTask />
       </header>
       <ProcessCollection />

@@ -48,7 +48,7 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
             AppDispatch(taskRemoved({ id }));
           }}
         >
-          <XMarkIcon className="h-4 w-4" />
+          <XMarkIcon className="m-1 h-4 w-4 rounded-sm hover:bg-stone-300" />
         </button>
       </div>
       <div className="flex flex-row-reverse">
