@@ -9,11 +9,19 @@ import {
   selectTaskDeadline,
 } from "./tasksSlice";
 import { AppDispatch, useAppSelector } from "./store";
-import { calculateRemainingDate } from "./util";
+import { calculateRemainingHours } from "./util";
 
 const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
   const [requirementState, setRequirementState] = useState(requirement);
   const deadline = useAppSelector((state) => selectTaskDeadline(state, id));
+
+  const remainingHours = calculateRemainingHours(deadline);
+
+  const displayText = () => {
+    if (remainingHours === null) return "不明";
+    if (remainingHours < 24) return `あと${remainingHours}時間`;
+    return `あと${Math.floor(remainingHours / 24)}日`;
+  };
 
   const { dragProps } = useDrag({
     getItems() {
@@ -63,7 +71,13 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
           }}
           className="bg-inherit text-right hover:bg-stone-300"
         />
-        <div>{`あと${calculateRemainingDate(deadline)}日`}</div>
+        <div
+          className={
+            remainingHours && remainingHours < 24 ? "text-rose-600" : ""
+          }
+        >
+          {displayText()}
+        </div>
       </div>
     </div>
   );

@@ -7,12 +7,12 @@ export const todayValue = () => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-export const calculateRemainingDate = (deadline: string | undefined) => {
-  if (deadline === undefined) return "?";
+export const calculateRemainingHours = (deadline: string | undefined) => {
+  if (deadline === undefined) return null;
   const today = new Date();
   const deadlineDate = new Date(deadline);
   const milliseconds = deadlineDate.getTime() - today.getTime();
   if (milliseconds < 0) return 0;
   const hours = Math.floor(milliseconds / 1000 / 60 / 60);
-  return Math.floor(hours / 24);
+  return hours;
 };
