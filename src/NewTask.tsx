@@ -2,7 +2,7 @@ import React from "react";
 import { created } from "./tasksSlice";
 import { AppDispatch } from "./store";
 
-const TodoProcess = () => (
+const NewTask = () => (
   <button
     type="button"
     onClick={() =>
@@ -13,4 +13,4 @@ const TodoProcess = () => (
   </button>
 );
 
-export default TodoProcess;
+export default NewTask;
