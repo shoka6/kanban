@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDrop } from "react-aria";
 import TaskCard from "./TaskCard";
-import { selectTodoTask, created, statusUpdated } from "./tasksSlice";
+import { selectTodoTask, statusUpdated } from "./tasksSlice";
 import { useAppSelector, AppDispatch } from "./store";
 
 const TodoProcess = () => {
@@ -27,12 +27,6 @@ const TodoProcess = () => {
       className="h-5/6 w-1/3 bg-stone-200 text-center"
     >
       <div>待機</div>
-      <button
-        type="button"
-        onClick={() => AppDispatch(created({ requirement: "新規タスク" }))}
-      >
-        新規
-      </button>
       <div className="h-5/6 overflow-scroll">
         {todoTasks.map((task) => (
           <TaskCard key={task.id} id={task.id} requirement={task.requirement} />
