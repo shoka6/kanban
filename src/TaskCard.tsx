@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useDrag } from "react-aria";
 import {
   Task,
@@ -30,25 +31,26 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
       className="mx-auto my-6 flex w-4/5 flex-col space-y-3 rounded-md border-2 border-black"
       draggable
     >
-      <button
-        type="button"
-        className="top-0 right-0 text-right text-lg"
-        onClick={() => {
-          AppDispatch(taskRemoved({ id }));
-        }}
-      >
-        X
-      </button>
-      <input
-        value={requirementState}
-        onChange={(event) => setRequirementState(event.target.value)}
-        onBlur={() => {
-          AppDispatch(
-            requirementUpdated({ id, requirement: requirementState })
-          );
-        }}
-        className="bg-inherit"
-      />
+      <div className="flex justify-around">
+        <input
+          value={requirementState}
+          onChange={(event) => setRequirementState(event.target.value)}
+          onBlur={() => {
+            AppDispatch(
+              requirementUpdated({ id, requirement: requirementState })
+            );
+          }}
+          className="bg-inherit"
+        />
+        <button
+          type="button"
+          onClick={() => {
+            AppDispatch(taskRemoved({ id }));
+          }}
+        >
+          <XMarkIcon className="h-4 w-4" />
+        </button>
+      </div>
       <div className="flex flex-row-reverse">
         <input
           type="date"
