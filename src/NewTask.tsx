@@ -8,7 +8,7 @@ const NewTask = () => (
     className="col-start-8 w-fit rounded-md px-5 py-1 text-center hover:bg-emerald-400"
     type="button"
     onClick={() =>
-      AppDispatch(created({ requirement: "ここにタスクを入力してください" }))
+      AppDispatch(created({ requirement: "タスクを入力して下さい" }))
     }
   >
     <div className="flex justify-center space-x-2">
