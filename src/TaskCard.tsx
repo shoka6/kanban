@@ -31,7 +31,7 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
       className="mx-auto my-6 flex w-4/5 flex-col space-y-3 rounded-md border-2 border-black"
       draggable
     >
-      <div className="flex justify-around">
+      <div className="flex justify-between">
         <input
           value={requirementState}
           onChange={(event) => setRequirementState(event.target.value)}

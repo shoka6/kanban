@@ -5,7 +5,9 @@ import { AppDispatch } from "./store";
 const TodoProcess = () => (
   <button
     type="button"
-    onClick={() => AppDispatch(created({ requirement: "新規タスク" }))}
+    onClick={() =>
+      AppDispatch(created({ requirement: "ここにタスクを入力してください" }))
+    }
   >
     新規
   </button>
