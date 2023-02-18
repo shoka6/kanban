@@ -23,6 +23,8 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
     return `あと${Math.floor(remainingHours / 24)}日`;
   };
 
+  const [draggable, setDraggable] = useState(true);
+
   const { dragProps } = useDrag({
     getItems() {
       return [
@@ -37,14 +39,18 @@ const TaskCard = ({ id, requirement }: Pick<Task, "id" | "requirement">) => {
     <div
       {...dragProps}
       className="mx-auto my-6 flex w-4/5 flex-col space-y-3 rounded-md border-2 border-black p-2"
-      draggable
+      draggable={draggable}
     >
       <div className="flex justify-between">
         <input
           className="bg-inherit hover:bg-stone-300"
           value={requirementState}
           onChange={(event) => setRequirementState(event.target.value)}
+          onFocus={() => {
+            setDraggable(false);
+          }}
           onBlur={() => {
+            setDraggable(true);
             AppDispatch(
               requirementUpdated({ id, requirement: requirementState })
             );
